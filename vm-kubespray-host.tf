@@ -12,7 +12,8 @@ locals {
     "${path.module}/scripts/install_kubernetes.sh",
     {
       kubespray_data_dir = local.kubespray_data_dir,
-      kubespray_image    = var.kubespray_image
+      kubespray_image    = var.kubespray_image,
+      vm_user            = var.vm_user
     }
   )
 
@@ -63,9 +64,13 @@ module "kubespray_host" {
   vm_cpu_type                  = var.vm_cpu_type
   vm_memory_mb                 = 2048
   vm_os_disk_storage           = var.vm_os_disk_storage
-  vm_os_disk_size_gb           = 10
+  vm_os_disk_size_gb           = 20
   vm_net_name                  = var.internal_net_name
   vm_net_subnet_cidr           = var.internal_net_subnet_cidr
+  vm_vlan_tag                  = var.internal_vlan_tag
+  vm_net_name_data             = var.internal_net_name_data
+  vm_net_subnet_cidr_data      = var.internal_net_subnet_cidr_data
+  vm_vlan_tag_data             = var.internal_vlan_tag_data
   vm_host_number               = 5
   vm_user                      = var.vm_user
   vm_tags                      = "${var.env_name};terraform;kubespray"
@@ -105,14 +110,14 @@ resource "null_resource" "setup_kubespray" {
   }
 
   connection {
-    type         = "ssh"
-    user         = var.vm_user
-    private_key  = base64decode(var.ssh_private_key)
-    host         = module.kubespray_host.vm_list[0].ip0
-    port         = 22
-    bastion_host = var.bastion_ssh_ip
-    bastion_user = var.bastion_ssh_user
-    bastion_port = var.bastion_ssh_port
+    type        = "ssh"
+    user        = var.vm_user
+    private_key = base64decode(var.ssh_private_key)
+    host        = module.kubespray_host.vm_list[0].ip0
+    port        = 22
+    # bastion_host = var.bastion_ssh_ip
+    # bastion_user = var.bastion_ssh_user
+    # bastion_port = var.bastion_ssh_port
   }
 
   triggers = {

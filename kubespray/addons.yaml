@@ -13,11 +13,11 @@ registry_enabled: false
 # registry_disk_size: "10Gi"
 
 # Metrics Server deployment
-metrics_server_enabled: false
-# metrics_server_container_port: 4443
-# metrics_server_kubelet_insecure_tls: true
-# metrics_server_metric_resolution: 15s
-# metrics_server_kubelet_preferred_address_types: "InternalIP,ExternalIP,Hostname"
+metrics_server_enabled: true
+metrics_server_container_port: 4443
+metrics_server_kubelet_insecure_tls: true
+metrics_server_metric_resolution: 15s
+metrics_server_kubelet_preferred_address_types: "InternalIP,ExternalIP,Hostname"
 
 # Rancher Local Path Provisioner
 local_path_provisioner_enabled: false
@@ -160,7 +160,7 @@ cert_manager_enabled: false
 # cert_manager_leader_election_namespace: kube-system
 
 # MetalLB deployment
-metallb_enabled: false
+metallb_enabled: true
 metallb_speaker_enabled: true
 # metallb_ip_range:
 #   - "10.5.0.50-10.5.0.99"

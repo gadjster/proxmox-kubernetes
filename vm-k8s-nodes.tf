@@ -14,6 +14,10 @@ module "k8s_control_plane_nodes" {
   vm_os_disk_size_gb           = var.vm_k8s_control_plane["disk_size"]
   vm_net_name                  = var.internal_net_name
   vm_net_subnet_cidr           = var.internal_net_subnet_cidr
+  vm_vlan_tag                  = var.internal_vlan_tag
+  vm_net_name_data             = var.internal_net_name_data
+  vm_net_subnet_cidr_data      = var.internal_net_subnet_cidr_data
+  vm_vlan_tag_data             = var.internal_vlan_tag_data
   vm_host_number               = 10
   vm_user                      = var.vm_user
   vm_tags                      = "${var.env_name};terraform;k8s_control_plane"
@@ -37,6 +41,10 @@ module "k8s_worker_nodes" {
   vm_os_disk_size_gb            = var.vm_k8s_worker["disk_size"]
   vm_net_name                   = var.internal_net_name
   vm_net_subnet_cidr            = var.internal_net_subnet_cidr
+  vm_vlan_tag                   = var.internal_vlan_tag
+  vm_net_name_data              = var.internal_net_name_data
+  vm_net_subnet_cidr_data       = var.internal_net_subnet_cidr_data
+  vm_vlan_tag_data              = var.internal_vlan_tag_data
   vm_host_number                = 20
   vm_user                       = var.vm_user
   vm_tags                       = "${var.env_name};terraform;k8s_worker"

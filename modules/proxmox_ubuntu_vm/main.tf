@@ -4,7 +4,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "telmate/proxmox"
-      version = "3.0.1-rc3"
+      version = "3.0.1-rc6"
     }
   }
 }
@@ -21,7 +21,7 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   cores            = var.vm_max_vcpus
   vcpus            = var.vm_vcpus
   sockets          = var.vm_sockets
-  cpu              = var.vm_cpu_type
+  cpu_type         = var.vm_cpu_type
   memory           = var.vm_memory_mb
   bootdisk         = "virtio0"
   scsihw           = "virtio-scsi-single"
@@ -62,11 +62,24 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   }
 
   network {
-    model  = "virtio"
-    bridge = var.vm_net_name
+    id       = 0
+    model    = "virtio"
+    bridge   = var.vm_net_name
+    firewall = false
+    tag      = var.vm_vlan_tag
   }
 
+  network {
+    id       = 1
+    model    = "virtio"
+    bridge   = var.vm_net_name_data
+    firewall = false
+    tag      = var.vm_vlan_tag_data
+  }
+
+
   ipconfig0 = "ip=${cidrhost(var.vm_net_subnet_cidr, var.vm_host_number + count.index)}${local.vm_net_subnet_mask},gw=${local.vm_net_default_gw}"
+  ipconfig1 = "ip=${cidrhost(var.vm_net_subnet_cidr_data, var.vm_host_number + count.index)}${local.vm_net_subnet_mask_data},gw=${local.vm_net_default_gw_data}"
 
   ciuser  = var.vm_user
   sshkeys = base64decode(var.ssh_public_keys)

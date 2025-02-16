@@ -24,7 +24,27 @@ variable "vm_net_name" {
   description = ""
 }
 
+variable "vm_vlan_tag" {
+  type        = string
+  description = "Vlan tag"
+}
+
 variable "vm_net_subnet_cidr" {
+  type        = string
+  description = "Address prefix for the internal network"
+}
+
+variable "vm_net_name_data" {
+  type        = string
+  description = ""
+}
+
+variable "vm_vlan_tag_data" {
+  type        = string
+  description = "Vlan tag"
+}
+
+variable "vm_net_subnet_cidr_data" {
   type        = string
   description = "Address prefix for the internal network"
 }
@@ -42,7 +62,7 @@ variable "vm_onboot" {
 
 variable "vm_user" {
   type    = string
-  default = "ubuntu"
+  default = "pxservice"
 }
 
 variable "vm_sockets" {
@@ -105,7 +125,7 @@ variable "add_worker_node_data_disk" {
 variable "worker_node_data_disk_storage" {
   type        = string
   description = "The storage pool where the data disk is placed."
-  default     = ""
+  default     = "vm-storage"
 }
 
 variable "worker_node_data_disk_size" {
@@ -123,6 +143,8 @@ variable "use_legacy_naming_convention" {
 # Local vars
 # 
 locals {
-  vm_net_subnet_mask = "/${split("/", var.vm_net_subnet_cidr)[1]}"
-  vm_net_default_gw  = cidrhost(var.vm_net_subnet_cidr, 1)
+  vm_net_subnet_mask      = "/${split("/", var.vm_net_subnet_cidr)[1]}"
+  vm_net_default_gw       = cidrhost(var.vm_net_subnet_cidr, 1)
+  vm_net_subnet_mask_data = "/${split("/", var.vm_net_subnet_cidr_data)[1]}"
+  vm_net_default_gw_data  = cidrhost(var.vm_net_subnet_cidr_data, 1)
 }

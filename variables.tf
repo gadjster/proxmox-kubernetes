@@ -76,13 +76,37 @@ variable "pm_timeout" {
 variable "internal_net_name" {
   type        = string
   description = "Name of the internal network bridge"
-  default     = "vmbr1"
+  default     = "vmbr0"
+}
+
+variable "internal_vlan_tag" {
+  type        = string
+  description = "Vlan tag"
+  default     = "10"
 }
 
 variable "internal_net_subnet_cidr" {
   type        = string
   description = "CIDR of the internal network"
   default     = "10.0.1.0/24"
+}
+
+variable "internal_net_name_data" {
+  type        = string
+  description = "Name of the internal network bridge"
+  default     = "vmbr0"
+}
+
+variable "internal_vlan_tag_data" {
+  type        = string
+  description = "Vlan tag"
+  default     = "172"
+}
+
+variable "internal_net_subnet_cidr_data" {
+  type        = string
+  description = "CIDR of the internal network"
+  default     = "172.16.0.1/24"
 }
 
 variable "ssh_private_key" {
@@ -100,7 +124,7 @@ variable "ssh_public_keys" {
 variable "vm_user" {
   type        = string
   description = "The default user for all VMs"
-  default     = "ubuntu"
+  default     = "pxservice"
 }
 
 variable "vm_sockets" {
@@ -135,19 +159,19 @@ variable "add_worker_node_data_disk" {
 variable "worker_node_data_disk_storage" {
   type        = string
   description = "The storage pool where the data disk is placed"
-  default     = ""
+  default     = "vm-storage"
 }
 
 variable "worker_node_data_disk_size" {
   type        = string
   description = "The size of worker node data disk in Gigabyte"
-  default     = 10
+  default     = 2
 }
 
 variable "vm_ubuntu_tmpl_name" {
   type        = string
   description = "Name of Cloud-init template Ubuntu VM"
-  default     = "ubuntu-2404"
+  default     = "ubuntu-server-noble"
 }
 
 variable "bastion_ssh_ip" {
@@ -159,7 +183,7 @@ variable "bastion_ssh_ip" {
 variable "bastion_ssh_user" {
   type        = string
   description = "The user to authenticate to the bastion host"
-  default     = "ubuntu"
+  default     = "pxservice"
 }
 
 variable "bastion_ssh_port" {
@@ -199,7 +223,7 @@ variable "kubespray_image" {
 variable "kube_version" {
   type        = string
   description = "Kubernetes version"
-  default     = "v1.29.5"
+  default     = "v1.31.1"
 }
 variable "kube_network_plugin" {
   type        = string
@@ -240,7 +264,7 @@ variable "argocd_enabled" {
 variable "argocd_version" {
   type        = string
   description = "The ArgoCD version to be installed"
-  default     = "v2.11.4"
+  default     = "v2.12.6"
 }
 
 
